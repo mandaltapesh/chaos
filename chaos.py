@@ -1,4 +1,11 @@
 import matplotlib.pyplot as plt
+
+""" Reference: https://stackoverflow.com/questions/51464455/
+why-when-import-pygame-it-prints-the-version-and-welcome-message-how-delete-it/51470016"""
+
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+
 import pygame
 import random
 
