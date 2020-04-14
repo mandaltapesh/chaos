@@ -55,7 +55,7 @@ def draw_point_matplotlib(index, current_xy):
     :param current_xy: tuple of int
     :return: point : tuple
     """
-    # import pdb; pdb.set_trace()
+
     x_point = int((POINTS[index][0] + current_xy[0]) / 2)
     y_point = int((POINTS[index][1] + current_xy[1]) / 2)
     X_LIST.append(x_point)
@@ -70,15 +70,13 @@ def plot_pygame():
     """
     global COUNT_4
     pygame.init()
-    # screen_created = create_screen()
+
     screen = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
     screen.fill(WHITE)
     pygame.display.update()
 
-    # draw_initial_points(screen_created)
     while COUNT_4 != 4:
         print("inside loop")
-        # X, Y = pygame.mouse.get_pos()
         label_created = create_labels(LABELS[COUNT_4])
         screen.set_at(POINTS[COUNT_4], BLACK)
         screen.blit(label_created, POINTS[COUNT_4])
@@ -104,7 +102,7 @@ def plot_matplotlib():
     """
     function using matplotlib
     """
-    # import pdb; pdb.set_trace()
+
     current_point = POINTS[3]
     for i in range(1000000):
         dice = random.randint(1, 6)
@@ -115,13 +113,17 @@ def plot_matplotlib():
             current_point = draw_point_matplotlib(1, current_point)
         elif dice in [5, 6]:
             current_point = draw_point_matplotlib(2, current_point)
-    print("The end")
+
     plt.axis([-800, 800, -600, 600])
     plt.plot(X_LIST, Y_LIST, 'b.')
     plt.show()
 
 
 def main():
+    """
+    Main function with menu.
+    :return: None
+    """
     print("------------Welcome to chaos---------------")
     print(" ")
     print("Do you prefer to use matplotlib or pygame for visuals ? Type m for matplotlib and p for pygame.")
@@ -133,6 +135,7 @@ def main():
         plot_pygame()
     else:
         print("wrong choice")
+
 
 if __name__ == "__main__":
     main()
