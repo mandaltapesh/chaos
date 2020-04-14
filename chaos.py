@@ -122,9 +122,17 @@ def plot_matplotlib():
 
 
 def main():
-    plot_matplotlib()
-    # plot_pygame()
+    print("------------Welcome to chaos---------------")
+    print(" ")
+    print("Do you prefer to use matplotlib or pygame for visuals ? Type m for matplotlib and p for pygame.")
+    response = input(">> ")
 
+    if response == "m":
+        plot_matplotlib()
+    elif response == "p":
+        plot_pygame()
+    else:
+        print("wrong choice")
 
 if __name__ == "__main__":
     main()
