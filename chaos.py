@@ -126,22 +126,35 @@ def plot_matplotlib():
     plt.show()
 
 
-def main():
+def get_user_response():
     """
-    Main function with menu.
-    :return: None
+    Function to get user input
+    :return: response : str
     """
-    print("------------Welcome to chaos---------------")
+    print(" ")
+    print("--------------Welcome to chaos---------------")
     print(" ")
     print("Do you prefer to use matplotlib or pygame for visuals ? Type m for matplotlib and p for pygame.")
     response = input(">> ")
 
-    if response == "m":
-        plot_matplotlib()
-    elif response == "p":
-        plot_pygame()
-    else:
-        print("wrong choice")
+    return response
+
+
+def main():
+    """
+    Main function.
+    :return: None
+    """
+    while True:
+        response = get_user_response()
+        if response == "m":
+            plot_matplotlib()
+            break
+        elif response == "p":
+            plot_pygame()
+            break
+        else:
+            print("Wrong choice. So asking again")
 
 
 if __name__ == "__main__":
