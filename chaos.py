@@ -16,8 +16,12 @@ BLACK = (0, 0, 0)
 COUNT_4 = 0
 LABELS = ["A(1,2)", "B(3,4)", "C(5,6)", "S"]
 POINTS = [(100, 200), (400, 400), (700, 300), (500, 500)]
+GET_POINTS = []
+TEXT_COORDINATE = (300, 400)
 X_LIST = []
 Y_LIST = []
+
+pygame.init()
 
 
 def create_labels(label_text):
@@ -47,8 +51,8 @@ def draw_point_pygame(disp, index, current_xy):
     :param current_xy: tuple of int
     :return: point : tuple
     """
-    x_point = int((POINTS[index][0] + current_xy[0]) / 2)
-    y_point = int((POINTS[index][1] + current_xy[1]) / 2)
+    x_point = int((GET_POINTS[index][0] + current_xy[0]) / 2)
+    y_point = int((GET_POINTS[index][1] + current_xy[1]) / 2)
     disp.set_at((x_point, y_point), BLACK)
     pygame.display.update()
 
@@ -71,23 +75,59 @@ def draw_point_matplotlib(index, current_xy):
     return x_point, y_point
 
 
+def draw_text_screen(screen, text, points):
+    """
+    :param: screen, pygame object
+    :param: text, str
+    :param: points, tuple
+    :return: screen, pygame object
+    """
+
+    label_created = create_labels(text)
+    screen.set_at(points, BLACK)
+    screen.blit(label_created, points)
+    pygame.display.update()
+    return screen
+
+
+def get_points(screen):
+    """
+    Function to get coordintes.
+    :param: screen, pygame object
+    :return: screen, pygame object
+    """
+    screen = draw_text_screen(screen, "Click at 4 coordinates.", TEXT_COORDINATE)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if pygame.mouse.get_pressed() == (0, 0, 1):
+                    x, y = pygame.mouse.get_pos()
+                    GET_POINTS.append((x, y))
+
+        if len(GET_POINTS) == 4:
+            break
+
+    screen.fill(WHITE)
+    pygame.display.update()
+
+    return screen
+
+
 def plot_pygame():
     """
     function using pygame
     """
     global COUNT_4
-    pygame.init()
 
     screen = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
     screen.fill(WHITE)
     pygame.display.update()
 
+    screen = get_points(screen)
+
     while COUNT_4 != 4:
-        print("inside loop")
-        label_created = create_labels(LABELS[COUNT_4])
-        screen.set_at(POINTS[COUNT_4], BLACK)
-        screen.blit(label_created, POINTS[COUNT_4])
-        pygame.display.update()
+        screen = draw_text_screen(screen, LABELS[COUNT_4], GET_POINTS[COUNT_4])
         COUNT_4 += 1
 
     current_point = POINTS[3]
@@ -100,9 +140,6 @@ def plot_pygame():
             current_point = draw_point_pygame(screen, 1, current_point)
         elif dice in [5, 6]:
             current_point = draw_point_pygame(screen, 2, current_point)
-    print("The end")
-    while True:
-        pass
 
 
 def plot_matplotlib():
